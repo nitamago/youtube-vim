@@ -55,6 +55,10 @@ function youtubevim#test()
     echo Execcmd('ls /bin/')
 endfunction
 
+function youtubevim#test2()
+    echo Execcmd('youtube-dl https://www.youtube.com/watch?v=DK-lBi5r6Jk')
+endfunction
+
 function! Execcmd(cmd)
     let l:proc = vimproc#plineopen2(a:cmd)
     let l:response = ''
@@ -66,4 +70,4 @@ function! Execcmd(cmd)
 endfunction
 
 let &cpo = s:save_cpo
-onlet s:save_cpo
+unlet s:save_cpo
