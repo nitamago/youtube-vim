@@ -9,18 +9,14 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let V = vital#of('vital')
-let s:PM = s:V.import('Deprecated.ProcessManager')
 
 function! youtubevim#start()
     if executable('mplayer')
-        if s:PM.is_available()
-            let url = 'https://www.youtube.com/watch?v=DK-lBi5r6Jk'
-            let play_command = 'youtube-dl ' . s:url . ' --no-progress -o - | mplayer - -novideo'
-            call youtubevim#stop()
-            call s:PM.touch('youtubevim', play_command)
-        else
-            echo 'Error: vimproc is unavailable.'
-        endif
+        let url = 'https://www.youtube.com/watch?v=DK-lBi5r6Jk'
+        let play_command = 'youtube-dl ' . s:url . ' --no-progress -o - | mplayer - -novideo'
+        call youtubevim#stop()
+        "call s:PM.touch('youtubevim', play_command)
+        call Execcmd(play_command)
     else
         echo 'Error: Please install mplayer to listen streaming radio.'
     endif
@@ -28,8 +24,9 @@ function! youtubevim#start()
 endfunction
 
 function! youtubevim#stop()
-    if jazzradio#is_playing()
-        return s:PM.kill('youtubevim')
+    if youtubevim#is_playing()
+        "return s:PM.kill('youtubevim')
+        return 0
     endif
     echo "stop"
 endfunction
@@ -37,7 +34,8 @@ endfunction
 function! youtubevim#is_playing()
     let status = 'dead'
     try
-        let status = s:PM.status('youtubevim')
+        "let status = s:PM.status('youtubevim')
+        let status = 0
     catch
     endtry
 
@@ -46,6 +44,16 @@ function! youtubevim#is_playing()
     else
         return 0
     endif
+endfunction
+
+
+function! Execcmd(cmd)
+    let l:proc = vimproc#popen2(a:cmd)
+    let l:response = ''
+    while !l:proc.stdout.eof
+        let l:response .= l:proc.stdout.read()
+    endwhile
+    return l:response
 endfunction
 
 let &cpo = s:save_cpo
