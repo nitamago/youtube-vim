@@ -51,12 +51,19 @@ function! youtubevim#is_playing()
     endif
 endfunction
 
+function youtubevim#test()
+    echo Execcmd('ls /bin/')
+endfunction
 
 function! Execcmd(cmd)
     let l:proc = vimproc#plineopen2(a:cmd)
     let l:response = ''
+    while !l:proc.stdout.eof
+        let l:response .= l:proc.stdout.read()
+    endwhile
     echo "Executed"
+    return l:response
 endfunction
 
 let &cpo = s:save_cpo
-unlet s:save_cpo
+onlet s:save_cpo
