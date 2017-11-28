@@ -9,7 +9,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let V = vital#of('vital')
-let s:PM = s:V.import('ProcessManager')
+let s:PM = s:V.import('Deprecated.ProcessManager')
 
 function! youtubevim#start()
     if executable('mplayer')
