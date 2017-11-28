@@ -8,6 +8,8 @@ let g:loaded_youtubevim = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
+let V = vital#of('vital')
+
 function! youtubevim#start()
     echo "start"
 endfunction
