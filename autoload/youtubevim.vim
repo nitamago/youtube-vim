@@ -12,7 +12,7 @@ let V = vital#of('vital')
 
 function! youtubevim#start()
     if executable('mplayer')
-        let url = 'https://www.youtube.com/watch?v=DK-lBi5r6Jk'
+        let s:url = 'https://www.youtube.com/watch?v=DK-lBi5r6Jk'
         let play_command = 'youtube-dl ' . s:url . ' --no-progress -o - | mplayer - -novideo'
         call youtubevim#stop()
         "call s:PM.touch('youtubevim', play_command)
