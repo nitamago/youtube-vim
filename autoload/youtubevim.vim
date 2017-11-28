@@ -48,11 +48,12 @@ endfunction
 
 
 function! Execcmd(cmd)
-    let l:proc = vimproc#popen2(a:cmd)
+    let l:proc = vimproc#plineopen2(a:cmd)
     let l:response = ''
     while !l:proc.stdout.eof
         let l:response .= l:proc.stdout.read()
     endwhile
+    echo "Executed"
     return l:response
 endfunction
 
